@@ -3,42 +3,49 @@ pragma solidity ^0.4.0;
 contract HotelManagement {
 
     struct Guest {
-        string name;   // short name (up to 32 bytes)
+        bytes32 name; // short name (up to 32 chars)
         uint roomNumber; // index of room availability array
         uint duration; // number of nights the guest has booked
         bool hasStayedBefore; // default value is false
         bool isAtHotel; // true while the guest is at the hotel
         bool hasReservation; // has reservation
-        uint totalOwed;
+        uint totalOwed; //
     }
 
     mapping(address => Guest) public guests;
     address public manager;
 
-    bool[] roomAvailability;
+    bool[] roomOccupied; // false means no one is in the room
+
     event LogAddGuest(address guestAddress, string nameToAdd);
     event LogPaymentMade(address accountAddress, uint amount);
 
+    /*uint[] roomPrices;*/
+    uint roomPrice;
 
-    function HotelManagement(uint numRooms, uint pricePerNight) {
+    function HotelManagement(uint numRooms, uint pricePerNight) { // uint[] pricesPerNight
+        // will add prices for other rooms later
         manager = msg.sender;
-        roomAvailability.length = numRooms;
-
+        roomOccupied.length = numRooms;
+        roomPrice = pricePerNight;
     }
 
     function makeReservation(string nameToAdd, uint roomPreference, uint duration) public payable {
+        // in the future we can add another param that adds room type
+        // make reservation button will be grayed out if no rooms are available
         if (roomPreference == -1) {
             for (int i in number of rooms) {
-                if (roomAvailability[i]) {
+                if (!roomOccupied[i]) {
                     roomPreference = i + 1;
                 }
             }
         }
-        // because we know roomAvailability we will not allow occupied room entry
-        // in the frond end
-        roomAvailability[roomPreference - 1] =  false;
-        LogPaymentMade
 
+        // because we know if the room is occupied we will not allow occupied room entry
+        // in the frond end
+        LogPaymentMade(msg.sender, msg.value);
+        roomOccupied[roomPreference - 1] =  true;
+        
         if (msg.value < totalOwed) {
             return valueExpected - msg.value;
         } else if (msg.value > totalOwed) {
@@ -57,23 +64,26 @@ contract HotelManagement {
             hasVal: true
         });
 
+        guests[msg.sender].hasStayedBefore = true;
+
         tenants[msg.sender].paidSoFar += msg.value;
-
-
-
-        return 0;
     }
 
     function checkout() public {
 
     }
 
-    function getStayedBeforeStatus(address g) public constant returns (bool) {
+    function getRoomOccupied() public constant returns (bool[]) {
         require(msg.sender == manager);
-        return guests[g].hasStayedBefore;
+        return roomOccupied;
+    }
+
+    function getStayedBefore() public constant returns (bool) {
+        return guests[msg.sender].hasStayedBefore;
     }
 
     /*function getGuest(address _address) public constant returns (bytes32, uint, uint, bool) {
+        require(msg.sender == manager)
         return (tenants[_address].name, tenants[_address].totalOwed,
                 tenants[_address].paidSoFar, tenants[_address].hasVal);
     }*/
