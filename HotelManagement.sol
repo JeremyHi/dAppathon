@@ -6,7 +6,6 @@ contract HotelManagement {
     event LogCheckoutGuest(address guestAddress, bytes32 nameToCheckout);
     event LogPaymentMade(address accountAddress, uint amount);
 
-
     struct Guest {
         bytes32 name; // short name (up to 32 chars)
         uint roomNumber; // index of room availability array
@@ -42,8 +41,6 @@ contract HotelManagement {
         if (msg.value < totalOwed) {
             return totalOwed - msg.value; // non zero exit code means reservation didn't go through
         }
-
-
         guests[msg.sender].name = nameToAdd;
         guests[msg.sender].hasReservation = true;
         guests[msg.sender].roomNumber = roomNum;
