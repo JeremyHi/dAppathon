@@ -21,7 +21,7 @@ contract HotelManagement {
         /*var (x, y) = (bytes8 begin, bytes8 end);*/
     }
 
-    public struct Room {
+    struct Room {
         public Time[] availability;
     }
 
