@@ -34,7 +34,7 @@ contract HotelManagement {
     }
 
     function makeReservation(string nameToAdd, uint roomNum, Time t, uint totalOwed) public payable returns (uint) {
-
+        // money enters escrow
         LogPaymentMade(msg.sender, msg.value);
 
         if (msg.value < totalOwed) {
@@ -83,5 +83,4 @@ contract HotelManagement {
 
         return (guests[_address].name, guests[_address].hasStayedBefore, guests[_address].hasReservation);
     }
-
 }
