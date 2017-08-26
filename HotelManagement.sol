@@ -17,7 +17,6 @@ contract HotelManagement {
     struct Time {
         bytes8 begin; // dates in the form ddmmyyyy
         bytes8 end;
-        /*var (x, y) = (bytes8 begin, bytes8 end);*/
     }
 
     struct Room {
