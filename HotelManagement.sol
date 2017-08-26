@@ -73,7 +73,7 @@ contract HotelManagement {
         guests[msg.sender].isAtHotel = false;
     }
 
-    function getAvailability(uint roomNum) public constant returns (bytes8[][]) {
+    function getAvailability(uint roomNum) public constant returns (bytes8[2][]) {
         bytes8[2][] memory occupied;
         for (uint i = 0; i < rooms[roomNum].availability.length; i++) {
             occupied[i][0] = rooms[roomNum].availability[i].begin;
