@@ -59,10 +59,10 @@ contract HotelManagement {
 
         LogAddGuest(msg.sender, guests[msg.sender].name);
 
-
         guests[msg.sender].hasReservation = false;
         guests[msg.sender].isAtHotel = true;
         guests[msg.sender].hasStayedBefore = true;
+
     }
 
     function checkout() public {
@@ -73,12 +73,17 @@ contract HotelManagement {
         guests[msg.sender].isAtHotel = false;
     }
 
-    /*function getAvailability(uint _roomNumber) public constant returns (bytes8, bytes8) {
-        return ;
-    }*/
+    function getAvailability(uint roomNum) public constant returns (bytes8[][]) {
+        bytes8[2][] memory occupied;
+        for (uint i = 0; i < rooms[roomNum].availability.length; i++) {
+            occupied[i][0] = rooms[roomNum].availability[i].begin;
+            occupied[i][1] = rooms[roomNum].availability[i].end;
+        }
+        return occupied;
+    }
 
-    function getStayedBefore() public constant returns (bool) { // verify review
-        return guests[msg.sender].hasStayedBefore;
+    function getStayedBefore(address _address) public constant returns (bool) { // verify review
+        return guests[_address].hasStayedBefore;
     }
 
     function getGuest(address _address) public constant returns (bytes32 /*name*/, bool /*hasStayedBefore*/, bool /*hasReservation*/) {
