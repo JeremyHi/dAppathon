@@ -16,10 +16,10 @@ myContract = web3.eth.contract(ABIArray).at(contractAddress);
 console.log(myContract);
 
 $(function () {
-  $('#datetimepicker1').datetimepicker({format: 'DD/MM/YYYY'});
+  $('#datetimepicker1').datetimepicker({format: 'DDMMYYYY'});
 
   $('#datetimepicker2').datetimepicker({
-    format: 'DD/MM/YYYY',
+    format: 'DDMMYYYY',
     useCurrent: false //Important! See issue #1075
   });
 
@@ -29,5 +29,23 @@ $(function () {
 
   $("#datetimepicker2").on("dp.change", function (e) {
     $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+  });
+});
+
+
+$(document).on("click", "#roomAvailability", function(){
+  let checkIn = document.getElementById('checkInDate').value;
+  let checkOut = document.getElementById('checkOutDate').value;
+
+  console.log(checkIn);
+  console.log(checkOut);
+});
+
+// creates tags for room number
+$(function() {
+  $('.col-md-3').each(function() {
+    let number = 1 + Math.floor(Math.random() * 100);
+    $(this).attr("id", "room-" + number.toString());
+    $(this).text(number.toString());
   });
 });

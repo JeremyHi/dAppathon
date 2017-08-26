@@ -14,3 +14,9 @@ h1#welcome-header {
   padding-top: 10vh;
   color: #FFF;
 }
+
+.form-actions {
+  margin: 0;
+  background-color: transparent;
+  text-align: center;
+}
