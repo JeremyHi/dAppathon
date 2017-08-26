@@ -22,14 +22,15 @@ contract HotelManagement {
     }
 
     struct Room {
-        public Time[] availability;
+        Time[] availability;
     }
 
     mapping(address => Guest) public guests;
     address public manager;
-    Room[] public rooms;
 
-    function HotelManagement(uint numRooms, uint pPT) {
+    Room[] rooms;
+
+    function HotelManagement(uint numRooms) {
         manager = msg.sender;
         rooms.length = numRooms;
     }
@@ -83,7 +84,7 @@ contract HotelManagement {
     }
 
     function getGuest(address _address) public constant returns (bytes32 /*name*/, bool /*hasStayedBefore*/, bool /*hasReservation*/) {
-        require(msg.sender == manager)
+        require(msg.sender == manager);
 
         return (guests[_address].name, guests[_address].hasStayedBefore, guests[_address].hasReservation);
     }
