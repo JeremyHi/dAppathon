@@ -2,6 +2,9 @@ pragma solidity ^0.4.0;
 
 contract HotelManagement {
 
+    event LogAddGuest(address guestAddress, string nameToAdd);
+    event LogPaymentMade(address accountAddress, uint amount);
+
     struct Guest {
         bytes32 name; // short name (up to 32 chars)
         uint roomNumber; // index of room availability array
@@ -9,64 +12,48 @@ contract HotelManagement {
         bool hasStayedBefore; // default value is false
         bool isAtHotel; // true while the guest is at the hotel
         bool hasReservation; // has reservation
-        uint totalOwed; //
+    }
+
+    struct Time {
+        bytes8 begin; // dates in the form ddmmyyyy
+        bytes8 end;
+    }
+
+    struct Room {
+        Time[] availability;
     }
 
     mapping(address => Guest) public guests;
     address public manager;
+    Room[] rooms;
 
-    bool[] roomOccupied; // false means no one is in the room
-
-    event LogAddGuest(address guestAddress, string nameToAdd);
-    event LogPaymentMade(address accountAddress, uint amount);
-
-    /*uint[] roomPrices;*/
-    uint roomPrice;
-
-    function HotelManagement(uint numRooms, uint pricePerNight) { // uint[] pricesPerNight
-        // will add prices for other rooms later
+    function HotelManagement(uint numRooms, uint pPT) {
         manager = msg.sender;
-        roomOccupied.length = numRooms;
-        roomPrice = pricePerNight;
+        rooms.length = numRooms;
     }
 
-    function makeReservation(string nameToAdd, uint roomPreference, uint duration) public payable {
-        // in the future we can add another param that adds room type
-        // make reservation button will be grayed out if no rooms are available
-        if (roomPreference == -1) {
-            for (int i in number of rooms) {
-                if (!roomOccupied[i]) {
-                    roomPreference = i + 1;
-                }
-            }
-        }
+    function makeReservation(string nameToAdd, uint roomNum, Time t, uint totalOwed) public payable returns (uint) {
 
-        // because we know if the room is occupied we will not allow occupied room entry
-        // in the frond end
         LogPaymentMade(msg.sender, msg.value);
-        roomOccupied[roomPreference - 1] =  true;
-        
-        if (msg.value < totalOwed) {
-            return valueExpected - msg.value;
-        } else if (msg.value > totalOwed) {
 
+        if (msg.value < totalOwed) {
+            return valueExpected - msg.value; // non zero exit code means reservation didn't go through
         }
+
+        guests[msg.sender].name = nameToAdd;
+        guests[msg.sender].hasReservation = true;
+        guests[msg.sender].roomNumber = roomNum
+        return 0;
     }
 
-    function checkIn() public {
+    function checkIn(uint roomNum) public {
         require(guests[msg.sender].hasReservation);
 
-        LogAddGuest(msg.sender, nameToAdd);
-        guests[g] = Guest({
-            name: nameToAdd,
-            totalOwed: owed,
-            paidSoFar: paid,
-            hasVal: true
-        });
+        LogAddGuest(msg.sender, guests[msg.sender].name);
 
+        
+        guests[msg.sender].hasReservation = false;
         guests[msg.sender].hasStayedBefore = true;
-
-        tenants[msg.sender].paidSoFar += msg.value;
     }
 
     function checkout() public {
