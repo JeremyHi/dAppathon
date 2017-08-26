@@ -83,6 +83,7 @@ contract HotelManagement {
     }
 
     function getStayedBefore(address _address) public constant returns (bool) { // verify review
+        require(msg.sender == manager);
         return guests[_address].hasStayedBefore;
     }
 
