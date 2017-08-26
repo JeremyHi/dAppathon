@@ -6,7 +6,6 @@ contract HotelManagement {
     event LogCheckoutGuest(address guestAddress, bytes32 nameToCheckout);
     event LogPaymentMade(address accountAddress, uint amount);
 
-
     struct Guest {
         bytes32 name; // short name (up to 32 chars)
         uint roomNumber; // index of room availability array
@@ -36,13 +35,12 @@ contract HotelManagement {
     }
 
     function makeReservation(bytes32 nameToAdd, uint roomNum, bytes8 _begin, bytes8 _end, uint totalOwed) public payable returns (uint) {
-        // money enters escrow, totalOwed is calculated off chain
+        // money can enter escrow, totalOwed is calculated off chain
         LogPaymentMade(msg.sender, msg.value);
 
         if (msg.value < totalOwed) {
             return totalOwed - msg.value; // non zero exit code means reservation didn't go through
         }
-
 
         guests[msg.sender].name = nameToAdd;
         guests[msg.sender].hasReservation = true;
@@ -61,10 +59,10 @@ contract HotelManagement {
 
         LogAddGuest(msg.sender, guests[msg.sender].name);
 
-
         guests[msg.sender].hasReservation = false;
         guests[msg.sender].isAtHotel = true;
         guests[msg.sender].hasStayedBefore = true;
+
     }
 
     function checkout() public {
@@ -75,12 +73,18 @@ contract HotelManagement {
         guests[msg.sender].isAtHotel = false;
     }
 
-    /*function getAvailability(uint _roomNumber) public constant returns (bytes8, bytes8) {
-        return ;
-    }*/
+    function getAvailability(uint roomNum) public constant returns (bytes8[][]) {
+        bytes8[2][] memory occupied;
+        for (uint i = 0; i < rooms[roomNum].availability.length; i++) {
+            occupied[i][0] = rooms[roomNum].availability[i].begin;
+            occupied[i][1] = rooms[roomNum].availability[i].end;
+        }
+        return occupied;
+    }
 
-    function getStayedBefore() public constant returns (bool) { // verify review
-        return guests[msg.sender].hasStayedBefore;
+    function getStayedBefore(address _address) public constant returns (bool) { // verify review
+        require(msg.sender == manager);
+        return guests[_address].hasStayedBefore;
     }
 
     function getGuest(address _address) public constant returns (bytes32 /*name*/, bool /*hasStayedBefore*/, bool /*hasReservation*/) {
