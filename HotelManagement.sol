@@ -18,22 +18,23 @@ contract HotelManagement {
     struct Time {
         bytes8 begin; // dates in the form ddmmyyyy
         bytes8 end;
+        /*var (x, y) = (bytes8 begin, bytes8 end);*/
     }
 
-    struct Room {
-        Time[] availability;
+    public struct Room {
+        public Time[] availability;
     }
 
     mapping(address => Guest) public guests;
     address public manager;
-    Room[] rooms;
+    Room[] public rooms;
 
     function HotelManagement(uint numRooms, uint pPT) {
         manager = msg.sender;
         rooms.length = numRooms;
     }
 
-    function makeReservation(string nameToAdd, uint roomNum, Time t, uint totalOwed) public payable returns (uint) {
+    function makeReservation(bytes32 nameToAdd, uint roomNum, bytes8 _begin, bytes8 _end, uint totalOwed) public payable returns (uint) {
         // money enters escrow, totalOwed is calculated off chain
         LogPaymentMade(msg.sender, msg.value);
 
@@ -41,9 +42,15 @@ contract HotelManagement {
             return totalOwed - msg.value; // non zero exit code means reservation didn't go through
         }
 
+
         guests[msg.sender].name = nameToAdd;
         guests[msg.sender].hasReservation = true;
         guests[msg.sender].roomNumber = roomNum;
+
+        rooms[roomNum].availability.push(Time({
+             begin: _begin,
+             end: _end
+        }));
 
         return 0;
     }
@@ -67,12 +74,9 @@ contract HotelManagement {
         guests[msg.sender].isAtHotel = false;
     }
 
-    function getAvailability(address _address) public constant returns (bytes8, bytes8) {
-        require(msg.sender == manager);
-
-        return (rooms[guests[_address].roomNumber].availability.begin,
-                rooms[guests[_address].roomNumber].availability.end);
-    }
+    /*function getAvailability(uint _roomNumber) public constant returns (bytes8, bytes8) {
+        return ;
+    }*/
 
     function getStayedBefore() public constant returns (bool) { // verify review
         return guests[msg.sender].hasStayedBefore;
