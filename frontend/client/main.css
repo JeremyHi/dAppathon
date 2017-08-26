@@ -1,0 +1,16 @@
+/* CSS declarations go here */
+.input-group{
+  padding: 15px;
+}
+
+.jumbotron {
+  height: 50vh;
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
+}
+
+h1#welcome-header {
+  text-align: center;
+  padding-top: 10vh;
+  color: #FFF;
+}
