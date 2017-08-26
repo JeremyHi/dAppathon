@@ -34,11 +34,11 @@ contract HotelManagement {
     }
 
     function makeReservation(string nameToAdd, uint roomNum, Time t, uint totalOwed) public payable returns (uint) {
-        // money enters escrow
+        // money enters escrow, totalOwed is calculated off chain
         LogPaymentMade(msg.sender, msg.value);
 
         if (msg.value < totalOwed) {
-            return valueExpected - msg.value; // non zero exit code means reservation didn't go through
+            return totalOwed - msg.value; // non zero exit code means reservation didn't go through
         }
 
         guests[msg.sender].name = nameToAdd;
