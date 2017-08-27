@@ -5,8 +5,7 @@
 
 .jumbotron {
   height: 50vh;
-  background-color: #159957;
-  background-image: linear-gradient(120deg, #155799, #159957);
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 h1#welcome-header {
@@ -19,4 +18,35 @@ h1#welcome-header {
   margin: 0;
   background-color: transparent;
   text-align: center;
+}
+
+.col-sm-3 {
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #eee;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid #ddd;
+  border: 1px solid rgb(255, 255, 255)
+}
+
+#overlay {
+    display:none;
+    position: absolute;
+    width:100px;
+    height:100px;
+    background-color: gray;
+    top: 50px;
+    left: 50px;
+    padding: 10px;
+    opacity: .8;
+}
+
+body {
+  color: #FFF !important;
+  background-image: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(http://s1.1zoom.net/big3/606/Amsterdam_Netherlands_474761.jpg);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
