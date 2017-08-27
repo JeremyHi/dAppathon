@@ -13,3 +13,13 @@ Hotel Managers are [losing](http://www.hanyc.org/wp-content/uploads/2015/10/HVS-
 ## __Solution__
 
 The checkIn platform presents a blockchain based smart contract that would allow for hotel managers to construct a "hotel" on the blockchain which would handle the reservation, checkIn, checkout, availability services for them, reducing the amount of manageable work needed to run their business. The consumer benefit and marketable product is the ease of use for booking and staying in hotels, additionally not having to hand over any personal information to the hotel and risk having their [information stolen](http://www.latimes.com/business/la-fi-trump-hotels-20170712-story.html).
+
+## __Demo__
+
+The platform would look something similar to this:
+![top](Images/Top.png)
+The user would first be prompted to give the dates they want to stay at the hotel, then clicking the button to check room availability.
+![Middle](Images/Middle.png)
+Once presented with the chart of available rooms, the user would click on one of the available, visible rooms, which would them take them to the payment section.
+![Bottom](Images/Bottom.png)
+At the payment section, the user would have their price listed for the toal duration of their stay, and by clicking on "Pay Now" would be prompted to pay to make the transaction.

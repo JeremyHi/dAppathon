@@ -1,5 +1,5 @@
 <head>
-  <title>Hotel Manager dApp</title>
+  <title>checkIn</title>
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -31,25 +31,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">dAppathon</a>
+          <a class="navbar-brand" href="#">checkIn</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a id="checkInButton"><button style="background-color: #669866; color: #000;">Checking In?</button></a></li>
+              <li><a id="checkOutButton"><button style="background-color: #ec3636; color: #000;">Checking Out?</button></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -58,7 +50,7 @@
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-3" id="welcome-header">Welcome to bETH Hotel!</h1>
+      <h1 class="display-3" id="welcome-header">Welcome to checkIn!</h1>
     </div>
   </div>
 
@@ -91,7 +83,9 @@
             </div>
           </div>
           <div class="form-actions">
+            <a href="#myAnchor" rel="" id="anchor1" class="anchorLink">
               <button type="submit" class="btn" id="roomAvailability">Check Room Availability</button>
+            </a>
           </div>
       </div>
       <div class="col-md-2"></div>
@@ -100,7 +94,9 @@
     <hr>
 
     <div class="row">
-      <h3 style="text-align:center;">Please choose from the available rooms below</h3>
+      <a name="myAnchor" id="myAnchor">
+        <h3 style="text-align:center;">Please choose from the available rooms below</h3>
+      ></a>
       <div class="container">
         <div class="col-sm-6">
           <div class="row" id="roomRow1">
@@ -307,7 +303,7 @@
     <hr>
 
     <footer>
-      <p>&copy; bETH Hotel 2017</p>
+      <p>&copy; checkIn 2017</p>
     </footer>
   </div> <!-- /container -->
 

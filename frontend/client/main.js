@@ -74,7 +74,7 @@ $(function() {
         return;
       }
 
-      document.getElementById('price').innerHTML = "Ξ 0.0001";
+      document.getElementById('price').innerHTML = "Ξ 1.000";
     });
   }
 });
@@ -87,6 +87,24 @@ $(document).on("click", "#payNow", function() {
   let price = parseInt(document.getElementById('price').innerHTML.substring(1));
 
   myContract.makeReservation(name, room, checkInDate, checkOutDate, price, function(error, result) {
+    if(!error)
+      console.log(result)
+    else
+      console.error(error);
+  });
+});
+
+$(document).on("click", "#checkInButton", function() {
+  myContract.checkIn(function(error, result) {
+    if(!error)
+      console.log(result)
+    else
+      console.error(error);
+  });
+});
+
+$(document).on("click", "#checkOutButton", function() {
+  myContract.checkOut(function(error, result) {
     if(!error)
       console.log(result)
     else
