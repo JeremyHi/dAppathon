@@ -1,2 +1,2 @@
 # dAppathon
-On the way to lambo moon riding
+Repository for dAppathon 2017
